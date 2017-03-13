@@ -1,0 +1,14 @@
+---
+
+- command: '{{ makeq }}'
+  args: &args { chdir: '{{ chdir | default(playbook_dir) }}' }
+  register: makeq
+  check_mode: False
+  changed_when: makeq.rc == 1
+  failed_when: makeq.rc == 2
+  name: Run make in query mode
+
+- command: '{{ make }}'
+  args: *args
+  when: makeq.changed
+  name: Run make when needed

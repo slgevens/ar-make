@@ -1,0 +1,6 @@
+---
+
+make: |
+  make -f {{ makefile | default('Makefile') }} {{ targets | default([]) | join(' ') }}
+makeq: |
+  {{ make + ' -q' }}
