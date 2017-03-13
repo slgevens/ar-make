@@ -1,6 +1,10 @@
 ---
 
 make: |
-  make -f {{ makefile | default('Makefile') }} {{ targets | default([]) | join(' ') }}
+  make -f {{ makefile | default('Makefile') }}
+          {{ targets | default([]) | join(' ') }}
+          {% for key, value in params.iteritems() %}
+            {{ key ~ '=' ~ value }}
+          {% endfor %}
 makeq: |
   {{ make + ' -q' }}
