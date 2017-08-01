@@ -10,5 +10,6 @@
 
 - command: '{{ make }}'
   args: *args
+  check_mode: False
   when: makeq.changed
   name: Run make when needed

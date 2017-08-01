@@ -1,10 +1,12 @@
 ---
 
 make: |
-  make -f {{ makefile | default('Makefile') }}
+  make -f {{ makefile | default('Makefile') }} {% if ansible_check_mode %} -n {% endif %}
           {{ targets | default([]) | join(' ') }}
-          {% for key, value in params.iteritems() %}
-            {{ key ~ '=' ~ value }}
-          {% endfor %}
+          {% if params is defined %}
+            {% for key, value in params.iteritems() %}
+          {{ key ~ '=' ~ value }}
+            {% endfor %}
+          {% endif %}
 makeq: |
   {{ make + ' -q' }}
